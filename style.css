@@ -17,8 +17,8 @@ html, body {
     gap: 0;
     width: 98vw;
     max-width: 1400px;
-    height: 80vh;
-    max-height: 900px;
+    height: 60vh;      /* Decreased from 80vh to 60vh */
+    max-height: 700px; /* Decreased from 900px to 700px */
     margin: 0 auto;
 }
 
@@ -43,7 +43,7 @@ html, body {
 }
 
 .box:hover {
-    box-shadow: 0 0 32px 8px #bcbcff, 0 0 64px 16px #7f7fff55;
+    box-shadow: 0 0 16px 4px #bcbcff, 0 0 32px 8px #7f7fff55;
     background: #22223b;
     transition: box-shadow 0.2s, background 0.2s;
     z-index: 1;
@@ -92,7 +92,7 @@ html, body {
     display: flex;
     justify-content: center;
     gap: 24px;
-    margin-top: 32px;
+    margin-bottom: 24px;
 }
 
 .instrument-btn {
@@ -128,4 +128,37 @@ html, body {
     font-size: 2.5rem;
     margin-bottom: 0.5em;
     letter-spacing: 0.05em;
+}
+
+.description-block {
+    max-width: 900px;
+    margin: 48px auto 0 auto;
+    padding: 28px 36px;
+    background: #29294acc;
+    color: #e0e0ff;
+    border-radius: 16px;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    box-shadow: 0 2px 16px rgba(29, 28, 28, 0.2);
+}
+
+.description-block a {
+    color: #bcbcff;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.description-block a:hover,
+.description-block a:focus {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.description-block h2 {
+    color: #fff;
+    margin-top: 0;
+    font-size: 2rem;
+}
+.description-block p {
+    margin: 16px 0;
 }
