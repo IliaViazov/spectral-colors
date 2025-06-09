@@ -162,3 +162,27 @@ html, body {
 .description-block p {
     margin: 16px 0;
 }
+
+/* Add to style.css */
+.site-footer {
+    width: 100vw;
+    text-align: center;
+    padding: 18px 0 10px 0;
+    font-size: 1rem;
+    color: #bcbcff;
+    background: transparent;
+    letter-spacing: 0.03em;
+    margin-top: 40px;
+    opacity: 0.8;
+}
+
+.site-footer a {
+    color: #bcbcff;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+    color: #fff;
+}
