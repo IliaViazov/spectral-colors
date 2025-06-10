@@ -1,22 +1,32 @@
 window.addEventListener('DOMContentLoaded', () => {
-    // Select all images inside .parent .box
     const parent = document.querySelector('.parent');
     if (!parent) return;
 
-    const images = Array.from(parent.querySelectorAll('.box img'));
-    const srcs = images.map(img => img.getAttribute('src'));
-    const alts = images.map(img => img.getAttribute('alt'));
+    // List all instruments and how many images each has
+    const instrumentImages = {
+        flute: 5,
+        oboe: 4,
+        clarinet: 5,
+        bassoon: 5,
+        contrabassoon: 3,
+        'english-horn': 4,
+        'alto-saxophone': 3, // ← adjust the number to match your image count
+        'bass-clarinet': 5,
+        // Add new instruments here:
+        // 'new-instrument': NUMBER_OF_IMAGES
+    };
 
-    // Prepare sound file names (assumes same order as images, and .mp3 in /sounds/...)
-    // Example: "spectral/flute/1.png" → "sounds/flute/1.mp3"
-    const sounds = srcs.map(src => {
-        // Extract instrument and number from the image src
-        const match = src.match(/spectral\/([^/]+)\/(\d+)\.png$/);
-        if (match) {
-            return `sounds/${match[1]}/${match[2]}.mp3`;
+    // Build an array of all possible image objects
+    const allImages = [];
+    for (const [instrument, count] of Object.entries(instrumentImages)) {
+        for (let i = 1; i <= count; i++) {
+            allImages.push({
+                src: `spectral/${instrument}/${i}.png`,
+                alt: `${instrument.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} ${i}`,
+                sound: `sounds/${instrument}/${i}.mp3`
+            });
         }
-        return null;
-    });
+    }
 
     // Shuffle function
     function shuffle(array) {
@@ -27,20 +37,25 @@ window.addEventListener('DOMContentLoaded', () => {
         return array;
     }
 
-    // Shuffle indices for srcs, alts, and sounds together
-    const indices = srcs.map((_, i) => i);
-    shuffle(indices);
+    // Get all .box elements in the grid
+    const boxes = Array.from(parent.querySelectorAll('.box'));
+    // Shuffle all available images and pick as many as there are boxes
+    const chosen = shuffle(allImages.slice()).slice(0, boxes.length);
 
-    images.forEach((img, i) => {
-        img.setAttribute('src', srcs[indices[i]]);
-        img.setAttribute('alt', alts[indices[i]]);
-        img.dataset.sound = sounds[indices[i]];
-        img.style.cursor = "pointer";
-        img.onclick = function() {
-            if (img.dataset.sound) {
-                const audio = new Audio(img.dataset.sound);
-                audio.play();
-            }
-        };
+    // Assign images and sounds to boxes
+    boxes.forEach((box, i) => {
+        const img = box.querySelector('img');
+        if (img && chosen[i]) {
+            img.src = chosen[i].src;
+            img.alt = chosen[i].alt;
+            img.dataset.sound = chosen[i].sound;
+            img.style.cursor = "pointer";
+            img.onclick = function() {
+                if (img.dataset.sound) {
+                    const audio = new Audio(img.dataset.sound);
+                    audio.play();
+                }
+            };
+        }
     });
 });
